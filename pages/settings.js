@@ -48,25 +48,25 @@ function SettingsPage({swal}) {
 
   return (
     <Layout>
-      <h1>Settings</h1>
+      <h1>Setări</h1>
       {isLoading && (
         <Spinner />
       )}
       {!isLoading && (
         <>
-          <label>Featured product</label>
+          <label>Produs featured - nu e nevoie de chestia asta</label> 
           <select value={featuredProductId} onChange={ev => setFeaturedProductId(ev.target.value)}>
             {products.length > 0 && products.map(product => (
               <option key={product._id} value={product._id}>{product.title}</option>
             ))}
           </select>
-          <label>Shipping price (in usd)</label>
+          <label>Preț transport RON</label>
           <input type="number"
                  value={shippingFee}
                  onChange={ev => setShippingFee(ev.target.value)}
           />
           <div>
-            <button onClick={saveSettings} className="btn-primary">Save settings</button>
+            <button onClick={saveSettings} className="btn-primary">Salvează</button>
           </div>
         </>
       )}

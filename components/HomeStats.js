@@ -43,40 +43,40 @@ export default function HomeStats() {
 
   return (
     <div>
-      <h2>Orders</h2>
+      <h2>Comenzi</h2>
       <div className="tiles-grid">
         <div className="tile">
-          <h3 className="tile-header">Today</h3>
+          <h3 className="tile-header">Astăzi</h3>
           <div className="tile-number">{ordersToday.length}</div>
-          <div className="tile-desc">{ordersToday.length} orders today</div>
+          <div className="tile-desc">{ordersToday.length} comenzi astăzi</div>
         </div>
         <div className="tile">
-          <h3 className="tile-header">This week</h3>
+          <h3 className="tile-header">Această săptămână</h3>
           <div className="tile-number">{ordersWeek.length}</div>
-          <div className="tile-desc">{ordersWeek.length} orders this week</div>
+          <div className="tile-desc">{ordersWeek.length} comenzi în această săptămână</div>
         </div>
         <div className="tile">
-          <h3 className="tile-header">This month</h3>
+          <h3 className="tile-header">Acest lună</h3>
           <div className="tile-number">{ordersMonth.length}</div>
-          <div className="tile-desc">{ordersMonth.length} orders this month</div>
+          <div className="tile-desc">{ordersMonth.length} comenzi în această lună</div>
         </div>
       </div>
-      <h2>Revenue</h2>
+      <h2>Venituri</h2>
       <div className="tiles-grid">
         <div className="tile">
-          <h3 className="tile-header">Today</h3>
-          <div className="tile-number">$ {ordersTotal(ordersToday)}</div>
-          <div className="tile-desc">{ordersToday.length} orders today</div>
+          <h3 className="tile-header">Astăzi</h3>
+          <div className="tile-number"> {ordersTotal(ordersToday)}RON</div>
+          <div className="tile-desc">{ordersToday.length} comenzi astăzi</div>
         </div>
         <div className="tile">
-          <h3 className="tile-header">This week</h3>
-          <div className="tile-number">$ {ordersTotal(ordersWeek)}</div>
-          <div className="tile-desc">{ordersWeek.length} orders this week</div>
+          <h3 className="tile-header">Această săptămână</h3>
+          <div className="tile-number"> {ordersTotal(ordersWeek)}RON</div>
+          <div className="tile-desc">{ordersWeek.length} comenzi în această săptămână</div>
         </div>
         <div className="tile">
-          <h3 className="tile-header">This month</h3>
-          <div className="tile-number">$ {ordersTotal(ordersMonth)}</div>
-          <div className="tile-desc">{ordersMonth.length} orders this month</div>
+          <h3 className="tile-header">Acest lună</h3>
+          <div className="tile-number"> {ordersTotal(ordersMonth)}RON</div>
+          <div className="tile-desc">{ordersMonth.length} comenzi în această lună</div>
         </div>
       </div>
     </div>

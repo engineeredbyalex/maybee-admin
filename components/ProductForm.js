@@ -98,7 +98,7 @@ export default function ProductForm({
         onChange={ev => setCategory(ev.target.value)}>
         <option value="">Fara categorie</option>
         {categories.length > 0 && categories.map(c => (
-          <option key={p.name} value={c._id}>{c.name}</option>
+          <option key={c.name} value={c._id}>{c.name}</option>
         ))}
       </select>
       {categoriesLoading && (

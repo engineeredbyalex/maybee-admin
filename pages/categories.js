@@ -99,7 +99,7 @@ function Categories({swal}) {
   }
   return (
     <Layout>
-      <h1>Categories</h1>
+      <h1>Categorii</h1>
       <label>
         {editedCategory
           ? `Edit category ${editedCategory.name}`
@@ -115,19 +115,19 @@ function Categories({swal}) {
           <select
                   onChange={ev => setParentCategory(ev.target.value)}
                   value={parentCategory}>
-            <option value="">No parent category</option>
+            <option value="">Nu există proprietate părinte</option>
             {categories.length > 0 && categories.map(category => (
               <option key={category._id} value={category._id}>{category.name}</option>
             ))}
           </select>
         </div>
         <div className="mb-2">
-          <label className="block">Properties</label>
+          <label className="block">Proprietate</label>
           <button
             onClick={addProperty}
             type="button" 
             className="btn-default text-sm mb-2">
-            Add new property
+            Adaugă o nouă proprietate
           </button>
           {properties.length > 0 && properties.map((property,index) => (
             <div key={index} className="flex gap-1 mb-2">
@@ -164,7 +164,7 @@ function Categories({swal}) {
                 setParentCategory('');
                 setProperties([]);
               }}
-              className="btn-default">Cancel</button>
+              className="btn-default">Anuleaza</button>
           )}
           <button type="submit"
                   className="btn-primary py-1">
@@ -176,8 +176,8 @@ function Categories({swal}) {
         <table className="basic mt-4">
           <thead>
           <tr>
-            <td>Category name</td>
-            <td>Parent category</td>
+              <td>Nume categorie</td>
+              <td>Categorie părinte</td>
             <td></td>
           </tr>
           </thead>
@@ -200,11 +200,11 @@ function Categories({swal}) {
                   onClick={() => editCategory(category)}
                   className="btn-default mr-1"
                 >
-                  Edit
+                  Editează
                 </button>
                 <button
                   onClick={() => deleteCategory(category)}
-                  className="btn-red">Delete</button>
+                  className="btn-red">Șterge</button>
               </td>
             </tr>
           ))}
