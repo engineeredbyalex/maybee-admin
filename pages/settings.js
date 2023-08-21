@@ -57,7 +57,7 @@ function SettingsPage({swal}) {
           <label>Featured product</label>
           <select value={featuredProductId} onChange={ev => setFeaturedProductId(ev.target.value)}>
             {products.length > 0 && products.map(product => (
-              <option key={product._id} value={product._id}>{product.title}</option>
+              <option value={product._id}>{product.title}</option>
             ))}
           </select>
           <label>Shipping price (in usd)</label>
@@ -66,7 +66,7 @@ function SettingsPage({swal}) {
                  onChange={ev => setShippingFee(ev.target.value)}
           />
           <div>
-            <button onClick={saveSettings} className="btn-primary">Salveaz setarile</button>
+            <button onClick={saveSettings} className="btn-primary">Save settings</button>
           </div>
         </>
       )}

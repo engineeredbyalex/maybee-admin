@@ -3,12 +3,11 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
 import { ReactSortable } from "react-sortablejs";
-import Image from "next/image";
-
 export default function ProductForm({
   _id,
   title: existingTitle,
   description: existingDescription,
+  scente: existingScenete,
   price: existingPrice,
   images: existingImages,
   category: assignedCategory,
@@ -16,6 +15,7 @@ export default function ProductForm({
 }) {
   const [title, setTitle] = useState(existingTitle || '');
   const [description, setDescription] = useState(existingDescription || '');
+  const [scente, setScente] = useState(existingScenete || '');
   const [category, setCategory] = useState(assignedCategory || '');
   const [productProperties, setProductProperties] = useState(assignedProperties || {});
   const [price, setPrice] = useState(existingPrice || '');
@@ -35,14 +35,12 @@ export default function ProductForm({
   async function saveProduct(ev) {
     ev.preventDefault();
     const data = {
-      title, description, price, images, category,
+      title, scente, description, price, images, category,
       properties: productProperties
     };
     if (_id) {
-      //update
       await axios.put('/api/products', { ...data, _id });
     } else {
-      //create
       await axios.post('/api/products', data);
     }
     setGoToProducts(true);
@@ -92,7 +90,7 @@ export default function ProductForm({
       <label>Nume produs</label>
       <input
         type="text"
-        placeholder="Nume produs"
+        placeholder="Nume Produs"
         value={title}
         onChange={ev => setTitle(ev.target.value)} />
       <label>Categorie</label>
@@ -100,14 +98,14 @@ export default function ProductForm({
         onChange={ev => setCategory(ev.target.value)}>
         <option value="">Fara categorie</option>
         {categories.length > 0 && categories.map(c => (
-          <option key={c._id} value={c._id}>{c.name}</option>
+          <option value={c._id}>{c.name}</option>
         ))}
       </select>
       {categoriesLoading && (
         <Spinner />
       )}
       {propertiesToFill.length > 0 && propertiesToFill.map(p => (
-        <div key={p._id} className="">
+        <div className="">
           <label>{p.name[0].toUpperCase() + p.name.substring(1)}</label>
           <div>
             <select value={productProperties[p.name]}
@@ -116,7 +114,7 @@ export default function ProductForm({
               }
             >
               {p.values.map(v => (
-                <option key={v._id} value={v}>{v}</option>
+                <option value={v}>{v}</option>
               ))}
             </select>
           </div>
@@ -129,12 +127,15 @@ export default function ProductForm({
         <ReactSortable
           list={images}
           className="flex flex-wrap gap-1"
-          setList={updateImagesOrder}>
-          {!!images?.length && images.map(link => (
-            <div key={link} className="h-24 bg-white p-4 shadow-sm rounded-sm border border-gray-200">
-              <Image src={link} alt="" className="rounded-lg" />
-            </div>
-          ))}
+          setList={updateImagesOrder}
+        >
+          {images?.length > 0 &&
+            images.map((link) => (
+              <div key={link} className="h-24 bg-white p-4 shadow-sm rounded-sm border border-gray-200">
+                <img src={link} alt="" className="rounded-lg" />
+              </div>
+            ))
+          }
         </ReactSortable>
         {isUploading && (
           <div className="h-24 flex items-center">
@@ -153,7 +154,7 @@ export default function ProductForm({
       </div>
       <label>Descriere</label>
       <textarea
-        placeholder="Descriere"
+        placeholder="description"
         value={description}
         onChange={ev => setDescription(ev.target.value)}
       />
