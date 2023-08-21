@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
 import { ReactSortable } from "react-sortablejs";
+import Image from "next/image";
 export default function ProductForm({
   _id,
   title: existingTitle,
@@ -98,14 +99,14 @@ export default function ProductForm({
         onChange={ev => setCategory(ev.target.value)}>
         <option value="">Fara categorie</option>
         {categories.length > 0 && categories.map(c => (
-          <option value={c._id}>{c.name}</option>
+          <option key={p.name} value={c._id}>{c.name}</option>
         ))}
       </select>
       {categoriesLoading && (
         <Spinner />
       )}
       {propertiesToFill.length > 0 && propertiesToFill.map(p => (
-        <div className="">
+        <div key={p.value} className="">
           <label>{p.name[0].toUpperCase() + p.name.substring(1)}</label>
           <div>
             <select value={productProperties[p.name]}
@@ -114,7 +115,7 @@ export default function ProductForm({
               }
             >
               {p.values.map(v => (
-                <option value={v}>{v}</option>
+                <option key={p.value} value={v}>{v}</option>
               ))}
             </select>
           </div>
@@ -132,7 +133,7 @@ export default function ProductForm({
           {images?.length > 0 &&
             images.map((link) => (
               <div key={link} className="h-24 bg-white p-4 shadow-sm rounded-sm border border-gray-200">
-                <img src={link} alt="" className="rounded-lg" />
+                <Image width={200} height={200} src={link} alt="" className="rounded-lg" />
               </div>
             ))
           }
