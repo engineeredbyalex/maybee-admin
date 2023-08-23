@@ -54,7 +54,7 @@ export default function OrdersPage() {
                       console.log(l); // Add this line
                       return (
                         <div key={l._id}>
-                          <p>Nume : </p>{l.product_data}
+                          <p>Nume : </p>{l.title}
                           <p>Parfum : {l.selectedScent}</p>
                           <p>Decoratiune : {l.selectedDecoration}</p>
                           <p>Cantitate : {l.quantity}</p>
