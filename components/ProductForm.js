@@ -75,14 +75,23 @@ export default function ProductForm({
   }
 
   const propertiesToFill = [];
-  if (categories.length > 0 && category) {
-    let catInfo = categories.find(({ _id }) => _id === category);
-    propertiesToFill.push(...catInfo.properties);
-    while (catInfo?.parent?._id) {
-      const parentCat = categories.find(({ _id }) => _id === catInfo?.parent?._id);
-      propertiesToFill.push(...parentCat.properties);
-      catInfo = parentCat;
-    }
+  {
+    propertiesToFill.length > 0 && propertiesToFill.map(p => (
+      <div key={p.value} className="">
+        <label>{p.name[0].toUpperCase() + p.name.substring(1)}</label>
+        <div>
+          <select value={productProperties[p.name]}
+            onChange={ev =>
+              setProductProp(p.name, ev.target.value)
+            }
+          >
+            {p.values.map(v => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+    ))
   }
 
   return (
