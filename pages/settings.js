@@ -54,12 +54,12 @@ function SettingsPage({swal}) {
       )}
       {!isLoading && (
         <>
-          <label>Produs featured - nu e nevoie de chestia asta</label> 
+          {/* <label>Produs featured - nu e nevoie de chestia asta</label>
           <select value={featuredProductId} onChange={ev => setFeaturedProductId(ev.target.value)}>
             {products.length > 0 && products.map(product => (
               <option key={product._id} value={product._id}>{product.title}</option>
             ))}
-          </select>
+          </select> */}
           <label>Preț transport RON</label>
           <input type="number"
                  value={shippingFee}

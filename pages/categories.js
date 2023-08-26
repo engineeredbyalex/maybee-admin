@@ -56,11 +56,11 @@ function Categories({swal}) {
   }
   function deleteCategory(category){
     swal.fire({
-      title: 'Are you sure?',
-      text: `Do you want to delete ${category.name}?`,
+      title: 'Esti sigur',
+      text: `Vrei sa stergi ${category.name}?`,
       showCancelButton: true,
-      cancelButtonText: 'Cancel',
-      confirmButtonText: 'Yes, Delete!',
+      cancelButtonText: 'Anuleaza',
+      confirmButtonText: 'Da !',
       confirmButtonColor: '#d55',
       reverseButtons: true,
     }).then(async result => {
@@ -102,14 +102,14 @@ function Categories({swal}) {
       <h1>Categorii</h1>
       <label>
         {editedCategory
-          ? `Edit category ${editedCategory.name}`
-          : 'Create new category'}
+          ? `Editează categoria ${editedCategory.name}`
+          : 'Crează o categorie nouă'}
       </label>
       <form onSubmit={saveCategory}>
         <div className="flex gap-1">
           <input
             type="text"
-            placeholder={'Category name'}
+            placeholder={'Nume categorie'}
             onChange={ev => setName(ev.target.value)}
             value={name}/>
           <select
@@ -135,7 +135,7 @@ function Categories({swal}) {
                      value={property.name}
                      className="mb-0"
                      onChange={ev => handlePropertyNameChange(index,property,ev.target.value)}
-                     placeholder="property name (example: color)"/>
+                placeholder="nume proprietate exemplu: (culoare : negru)" />
               <input type="text"
                      className="mb-0"
                      onChange={ev =>
@@ -144,12 +144,12 @@ function Categories({swal}) {
                          property,ev.target.value
                        )}
                      value={property.values}
-                     placeholder="values, comma separated"/>
+                placeholder="valori separate prin virgulă" />
               <button
                 onClick={() => removeProperty(index)}
                 type="button"
                 className="btn-red">
-                Remove
+                Șterge
               </button>
             </div>
           ))}
