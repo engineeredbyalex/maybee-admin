@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
 import { ReactSortable } from "react-sortablejs";
+
 export default function ProductForm({
   _id,
   title: existingTitle,
   description: existingDescription,
-  scente: existingScenete,
   price: existingPrice,
   images: existingImages,
   category: assignedCategory,
@@ -15,7 +15,6 @@ export default function ProductForm({
 }) {
   const [title, setTitle] = useState(existingTitle || '');
   const [description, setDescription] = useState(existingDescription || '');
-  const [scente, setScente] = useState(existingScenete || '');
   const [category, setCategory] = useState(assignedCategory || '');
   const [productProperties, setProductProperties] = useState(assignedProperties || {});
   const [price, setPrice] = useState(existingPrice || '');
@@ -65,19 +64,6 @@ export default function ProductForm({
       setIsUploading(false);
     }
   }
-
-  async function deleteImage(imageUrl) {
-    try {
-      console.log("Deleting image:", imageUrl); // Log the imageUrl being deleted
-      await axios.delete('/api/delete', { data: { file: imageUrl } }); // Adjust the API endpoint according to your setup
-      const updatedImages = images.filter((link) => link !== imageUrl);
-      setImages(updatedImages);
-      console.log("Image deleted successfully:", imageUrl); // Log the successful deletion of the imageUrl
-    } catch (error) {
-      console.error('Error deleting image:', error);
-    }
-  }
-
   function updateImagesOrder(images) {
     setImages(images);
   }
@@ -105,22 +91,22 @@ export default function ProductForm({
       <label>Nume produs</label>
       <input
         type="text"
-        placeholder="Nume Produs"
+        placeholder="Nume produs"
         value={title}
         onChange={ev => setTitle(ev.target.value)} />
       <label>Categorie</label>
       <select value={category}
         onChange={ev => setCategory(ev.target.value)}>
-        <option value="">Fara categorie</option>
+        <option value="">Uncategorized</option>
         {categories.length > 0 && categories.map(c => (
-          <option key={c.name} value={c._id}>{c.name}</option>
+          <option value={c._id}>{c.name}</option>
         ))}
       </select>
       {categoriesLoading && (
         <Spinner />
       )}
       {propertiesToFill.length > 0 && propertiesToFill.map(p => (
-        <div key={p.value} className="">
+        <div className="">
           <label>{p.name[0].toUpperCase() + p.name.substring(1)}</label>
           <div>
             <select value={productProperties[p.name]}
@@ -129,34 +115,25 @@ export default function ProductForm({
               }
             >
               {p.values.map(v => (
-                <option key={p.value} value={v}>{v}</option>
+                <option value={v}>{v}</option>
               ))}
             </select>
           </div>
         </div>
       ))}
       <label>
-        Poze
+        Photos
       </label>
       <div className="mb-2 flex flex-wrap gap-1">
         <ReactSortable
           list={images}
           className="flex flex-wrap gap-1"
-          setList={updateImagesOrder}
-        >
-          {images?.length > 0 &&
-            images.map((link, index) => (
-              <div key={link} className="h-auto bg-white p-4 shadow-sm rounded-sm border border-gray-200 flex flex-col">
-                <img width={100} src={link} alt="" className="rounded-lg" />
-                {/* <button
-                  className="text-sm text-white mt-1 bg-orange-300 rounded-2xl"
-                  onClick={() => deleteImage(link)} // Call the deleteImage function when the button is clicked
-                >
-                  Șterge
-                </button> */}
-              </div>
-            ))
-          }
+          setList={updateImagesOrder}>
+          {!!images?.length && images.map(link => (
+            <div key={link} className="h-24 bg-white p-4 shadow-sm rounded-sm border border-gray-200">
+              <img src={link} alt="" className="rounded-lg" />
+            </div>
+          ))}
         </ReactSortable>
         {isUploading && (
           <div className="h-24 flex items-center">
@@ -168,18 +145,18 @@ export default function ProductForm({
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
           </svg>
           <div>
-            Adauga imagine
+            Add image
           </div>
           <input type="file" onChange={uploadImages} className="hidden" />
         </label>
       </div>
-      <label>Descriere</label>
+      <label>Description</label>
       <textarea
         placeholder="description"
         value={description}
         onChange={ev => setDescription(ev.target.value)}
       />
-      <label>Pret (in RON)</label>
+      <label>Price (in RON)</label>
       <input
         type="number" placeholder="price"
         value={price}
@@ -188,7 +165,7 @@ export default function ProductForm({
       <button
         type="submit"
         className="btn-primary">
-        Salvare
+        Save
       </button>
     </form>
   );
