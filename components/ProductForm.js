@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
 import { ReactSortable } from "react-sortablejs";
-
 export default function ProductForm({
   _id,
   title: existingTitle,
   description: existingDescription,
+  scente: existingScenete,
   price: existingPrice,
   images: existingImages,
   category: assignedCategory,
@@ -15,6 +15,7 @@ export default function ProductForm({
 }) {
   const [title, setTitle] = useState(existingTitle || '');
   const [description, setDescription] = useState(existingDescription || '');
+  const [scente, setScente] = useState(existingScenete || '');
   const [category, setCategory] = useState(assignedCategory || '');
   const [productProperties, setProductProperties] = useState(assignedProperties || {});
   const [price, setPrice] = useState(existingPrice || '');
@@ -34,14 +35,12 @@ export default function ProductForm({
   async function saveProduct(ev) {
     ev.preventDefault();
     const data = {
-      title, description, price, images, category,
+      title, scente, description, price, images, category,
       properties: productProperties
     };
     if (_id) {
-      //update
       await axios.put('/api/products', { ...data, _id });
     } else {
-      //create
       await axios.post('/api/products', data);
     }
     setGoToProducts(true);
@@ -76,14 +75,23 @@ export default function ProductForm({
   }
 
   const propertiesToFill = [];
-  if (categories.length > 0 && category) {
-    let catInfo = categories.find(({ _id }) => _id === category);
-    propertiesToFill.push(...catInfo.properties);
-    while (catInfo?.parent?._id) {
-      const parentCat = categories.find(({ _id }) => _id === catInfo?.parent?._id);
-      propertiesToFill.push(...parentCat.properties);
-      catInfo = parentCat;
-    }
+  {
+    propertiesToFill.length > 0 && propertiesToFill.map(p => (
+      <div key={p.value} className="">
+        <label>{p.name[0].toUpperCase() + p.name.substring(1)}</label>
+        <div>
+          <select value={productProperties[p.name]}
+            onChange={ev =>
+              setProductProp(p.name, ev.target.value)
+            }
+          >
+            {p.values.map(v => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+    ))
   }
 
   return (
@@ -91,22 +99,22 @@ export default function ProductForm({
       <label>Nume produs</label>
       <input
         type="text"
-        placeholder="Nume produs"
+        placeholder="Nume Produs"
         value={title}
         onChange={ev => setTitle(ev.target.value)} />
       <label>Categorie</label>
       <select value={category}
         onChange={ev => setCategory(ev.target.value)}>
-        <option value="">Uncategorized</option>
+        <option value="">Fara categorie</option>
         {categories.length > 0 && categories.map(c => (
-          <option value={c._id}>{c.name}</option>
+          <option key={c.name} value={c._id}>{c.name}</option>
         ))}
       </select>
       {categoriesLoading && (
         <Spinner />
       )}
       {propertiesToFill.length > 0 && propertiesToFill.map(p => (
-        <div className="">
+        <div key={p.value} className="">
           <label>{p.name[0].toUpperCase() + p.name.substring(1)}</label>
           <div>
             <select value={productProperties[p.name]}
@@ -115,25 +123,28 @@ export default function ProductForm({
               }
             >
               {p.values.map(v => (
-                <option value={v}>{v}</option>
+                <option key={p.value} value={v}>{v}</option>
               ))}
             </select>
           </div>
         </div>
       ))}
       <label>
-        Photos
+        Poze
       </label>
       <div className="mb-2 flex flex-wrap gap-1">
         <ReactSortable
           list={images}
           className="flex flex-wrap gap-1"
-          setList={updateImagesOrder}>
-          {!!images?.length && images.map(link => (
-            <div key={link} className="h-24 bg-white p-4 shadow-sm rounded-sm border border-gray-200">
-              <img src={link} alt="" className="rounded-lg" />
-            </div>
-          ))}
+          setList={updateImagesOrder}
+        >
+          {images?.length > 0 &&
+            images.map((link) => (
+              <div key={link} className="h-24 bg-white p-4 shadow-sm rounded-sm border border-gray-200">
+                <img src={link} alt="" className="rounded-lg" />
+              </div>
+            ))
+          }
         </ReactSortable>
         {isUploading && (
           <div className="h-24 flex items-center">
@@ -145,18 +156,18 @@ export default function ProductForm({
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
           </svg>
           <div>
-            Add image
+            Adauga imagine
           </div>
           <input type="file" onChange={uploadImages} className="hidden" />
         </label>
       </div>
-      <label>Description</label>
+      <label>Descriere</label>
       <textarea
         placeholder="description"
         value={description}
         onChange={ev => setDescription(ev.target.value)}
       />
-      <label>Price (in RON)</label>
+      <label>Pret (in RON)</label>
       <input
         type="number" placeholder="price"
         value={price}
@@ -165,7 +176,7 @@ export default function ProductForm({
       <button
         type="submit"
         className="btn-primary">
-        Save
+        Salvare
       </button>
     </form>
   );
