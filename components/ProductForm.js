@@ -35,12 +35,14 @@ export default function ProductForm({
   async function saveProduct(ev) {
     ev.preventDefault();
     const data = {
-      title, scente, description, price, images, category,
+      title, description, price, images, category,
       properties: productProperties
     };
     if (_id) {
+      //update
       await axios.put('/api/products', { ...data, _id });
     } else {
+      //create
       await axios.post('/api/products', data);
     }
     setGoToProducts(true);
@@ -63,6 +65,19 @@ export default function ProductForm({
       setIsUploading(false);
     }
   }
+
+  async function deleteImage(imageUrl) {
+    try {
+      console.log("Deleting image:", imageUrl); // Log the imageUrl being deleted
+      await axios.delete('/api/delete', { data: { file: imageUrl } }); // Adjust the API endpoint according to your setup
+      const updatedImages = images.filter((link) => link !== imageUrl);
+      setImages(updatedImages);
+      console.log("Image deleted successfully:", imageUrl); // Log the successful deletion of the imageUrl
+    } catch (error) {
+      console.error('Error deleting image:', error);
+    }
+  }
+
   function updateImagesOrder(images) {
     setImages(images);
   }
@@ -75,23 +90,14 @@ export default function ProductForm({
   }
 
   const propertiesToFill = [];
-  {
-    propertiesToFill.length > 0 && propertiesToFill.map(p => (
-      <div key={p.value} className="">
-        <label>{p.name[0].toUpperCase() + p.name.substring(1)}</label>
-        <div>
-          <select value={productProperties[p.name]}
-            onChange={ev =>
-              setProductProp(p.name, ev.target.value)
-            }
-          >
-            {p.values.map(v => (
-              <option key={v} value={v}>{v}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-    ))
+  if (categories.length > 0 && category) {
+    let catInfo = categories.find(({ _id }) => _id === category);
+    propertiesToFill.push(...catInfo.properties);
+    while (catInfo?.parent?._id) {
+      const parentCat = categories.find(({ _id }) => _id === catInfo?.parent?._id);
+      propertiesToFill.push(...parentCat.properties);
+      catInfo = parentCat;
+    }
   }
 
   return (
@@ -139,9 +145,15 @@ export default function ProductForm({
           setList={updateImagesOrder}
         >
           {images?.length > 0 &&
-            images.map((link) => (
-              <div key={link} className="h-24 bg-white p-4 shadow-sm rounded-sm border border-gray-200">
-                <img src={link} alt="" className="rounded-lg" />
+            images.map((link, index) => (
+              <div key={link} className="h-auto bg-white p-4 shadow-sm rounded-sm border border-gray-200 flex flex-col">
+                <img width={100} src={link} alt="" className="rounded-lg" />
+                {/* <button
+                  className="text-sm text-white mt-1 bg-orange-300 rounded-2xl"
+                  onClick={() => deleteImage(link)} // Call the deleteImage function when the button is clicked
+                >
+                  Șterge
+                </button> */}
               </div>
             ))
           }
