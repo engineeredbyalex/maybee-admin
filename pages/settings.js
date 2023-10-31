@@ -1,10 +1,10 @@
 import Layout from "@/components/Layout";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
-import {withSwal} from "react-sweetalert2";
+import { withSwal } from "react-sweetalert2";
 
-function SettingsPage({swal}) {
+function SettingsPage({ swal }) {
   const [products, setProducts] = useState([]);
   const [featuredProductId, setFeaturedProductId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -54,16 +54,10 @@ function SettingsPage({swal}) {
       )}
       {!isLoading && (
         <>
-          {/* <label>Produs featured - nu e nevoie de chestia asta</label>
-          <select value={featuredProductId} onChange={ev => setFeaturedProductId(ev.target.value)}>
-            {products.length > 0 && products.map(product => (
-              <option key={product._id} value={product._id}>{product.title}</option>
-            ))}
-          </select> */}
-          <label>Preț transport RON</label>
+          <label>Cost transport</label>
           <input type="number"
-                 value={shippingFee}
-                 onChange={ev => setShippingFee(ev.target.value)}
+            value={shippingFee}
+            onChange={ev => setShippingFee(ev.target.value)}
           />
           <div>
             <button onClick={saveSettings} className="btn-primary">Salvează</button>
@@ -74,6 +68,6 @@ function SettingsPage({swal}) {
   );
 }
 
-export default withSwal(({swal}) => (
+export default withSwal(({ swal }) => (
   <SettingsPage swal={swal} />
 ));
