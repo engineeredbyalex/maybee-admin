@@ -11,26 +11,13 @@ export default async function handle(req, res) {
   await isAdminRequest(req, res);
 
   const form = new multiparty.Form();
-
-  form.on('part', (part) => {
-    if (part.name === 'file') {
-      part.headers['Content-Type'] = `image/${part.filename.split('.').pop()}`;
-    }
+  const { fields, files } = await new Promise((resolve, reject) => {
+    form.parse(req, (err, fields, files) => {
+      if (err) reject(err);
+      resolve({ fields, files });
+    });
   });
-
-  const { fields, files } = await
-
-    new
-
-      Promise((resolve, reject) => {
-        form.parse(req, (err, fields, files) => {
-          if (err) reject(err);
-          resolve({ fields, files });
-        });
-      });
-
   console.log('length:', files.file.length);
-
   const client = new S3Client({
     region: 'eu-north-1',
     credentials: {
@@ -38,13 +25,10 @@ export default async function handle(req, res) {
       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
     },
   });
-
   const links = [];
-
   for (const file of files.file) {
     const ext = file.originalFilename.split('.').pop();
     const newFilename = Date.now() + '.' + ext;
-
     await client.send(new PutObjectCommand({
       Bucket: bucketName,
       Key: newFilename,
@@ -52,11 +36,9 @@ export default async function handle(req, res) {
       ACL: 'public-read',
       ContentType: mime.lookup(file.path),
     }));
-
     const link = `https://${bucketName}.s3.amazonaws.com/${newFilename}`;
     links.push(link);
   }
-
   return res.json({ links });
 }
 
