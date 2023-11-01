@@ -4,7 +4,7 @@ import axios from "axios";
 import Spinner from "@/components/Basic/Spinner";
 import { prettyDate } from "@/lib/date";
 
-function AdminsPage({ swal }) {
+export default function AdminsPage() {
   const [email, setEmail] = useState('');
   const [adminEmails, setAdminEmails] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

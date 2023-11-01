@@ -4,7 +4,7 @@ import axios from "axios";
 import Spinner from "@/components/Basic/Spinner";
 
 
-function SettingsPage({swal}) {
+export default function SettingsPage() {
   const [products, setProducts] = useState([]);
   const [featuredProductId, setFeaturedProductId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
