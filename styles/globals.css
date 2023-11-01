@@ -2,48 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-img{
-    max-height: 100%;
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000;
+     @media screen and (max-width:768px) {
+            font-size: 20px;
+    }
 }
-input, textarea, select{
-    @apply border border-gray-200 rounded-sm  w-full py-2 px-3;
-    @apply mb-2;
+.logo_sec{
+    color:#A1A1A1;
+    font-size: 30px;
+    font-weight: lighter;
+    @media screen and (max-width:768px) {
+            font-size: 20px;
+    }
 }
-input:focus, textarea:focus, select:focus{
-    @apply border-orange-300;
+.text_light {
+        color:#A1A1A1;
+        font-weight: lighter;
+        text-transform: uppercase;
 }
-h1{
-    @apply text-orange-500 mb-4 text-xl;
+.text_dark {
+        color:#000;
+        font-weight: lighter;
+        text-transform: uppercase;
 }
-h2{
-    @apply text-orange-400  mt-6 mb-2 text-lg;
+.nav_item_unToggled {
+    @apply flex flex-col h-auto w-[16rem] bg-[#eeeeee] px-3  rounded-2xl items-center justify-between gap-10
 }
-label{
-    @apply text-orange-300 text-sm;
+.nav_item_toggled {
+    @apply flex flex-col h-[15rem] w-[16rem] bg-[#eeeeee] px-3  rounded-2xl items-center justify-center gap-10
 }
-.btn-primary{
-    @apply bg-orange-300  text-white px-4 py-1 rounded-sm shadow-sm;
+h1 {
+    font-size: 90px;
 }
-table.basic{
-    @apply w-full bg-white rounded-sm shadow-md;
+h2 {
+    font-size: 70px;
 }
-table.basic thead tr td,
-table.basic thead tr th
-{
-    @apply text-sm text-gray-600 uppercase border-b border-gray-200 px-4 py-2;
+h3 {
+    font-size: 50px;
 }
-table.basic tr td{
-    @apply px-4 py-1;
+h4 {
+    font-size: 30px;
 }
-table.basic a{
-    @apply px-4 rounded-sm inline-flex mx-1 items-center gap-1 text-sm py-1;
+h5{
+ font-size: 25px;
 }
-.btn-default, .btn-red{
-    @apply  px-4 py-1 rounded-md;
-}
-.btn-red{
-    @apply bg-red-200 text-red-600 px-4 py-1 rounded-sm shadow-sm;
-}
-.btn-default{
-    @apply bg-green-400 text-black  px-4 py-1 rounded-sm border border-gray-200 shadow-sm;
+p {
+    font-size: 18px;
 }

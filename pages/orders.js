@@ -1,7 +1,7 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Layout/Layout";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/Basic/Spinner";
 import Link from "next/link";
 
 export default function OrdersPage() {
@@ -21,10 +21,10 @@ export default function OrdersPage() {
       <h1>Comenzi</h1>
 
       <div className="mb-10">
-        <h2>
+        <h2 className="text-2xl">
           Stripe
         </h2>
-        <div className="flex flex-col items-start gap-[15px]">
+        <div className="flex flex-row items-start gap-[15px]">
           <button className="bg-black p-2 rounded-lg text-white max-w-[150px]"><Link target="_blank" href={'https://dashboard.stripe.com/payments'}>Vezi comenzi pe Stripe</Link></button>
           <button className="bg-black p-2 rounded-lg text-white max-w-[150px]"><Link href={'https://dashboard.stripe.com/balance/overview'}>Vezi blanță pe Stripe</Link></button>
           <button className="bg-black p-2 rounded-lg text-white max-w-[150px]"><Link href={'https://dashboard.stripe.com/customers'}>Vezi clienți pe Stripe</Link></button>

@@ -9,10 +9,13 @@ const ProductSchema = new Schema({
   title: { type: String, required: true },
   description: String,
   price: { type: Number, required: true },
+  priceNew: { type: Number, required: true },
   images: [{ type: String }],
   category: { type: mongoose.Types.ObjectId, ref: 'Category' },
   properties: { type: Object },
-  scente: [ScentSchema], // Add the scente field using the ScentSchema
+  scente: [ScentSchema], // corrected the field name to "scents"
+  duration: { type: Number, required: false }, // updated the duration field to be required
+  weight: { type: Number, required: false },
 }, {
   timestamps: true,
 });

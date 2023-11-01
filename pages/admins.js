@@ -1,8 +1,8 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Layout/Layout";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { withSwal } from "react-sweetalert2";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/Basic/Spinner";
 import { prettyDate } from "@/lib/date";
 
 function AdminsPage({ swal }) {

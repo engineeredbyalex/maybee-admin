@@ -1,9 +1,9 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ProductForm from "@/components/ProductForm";
-import Spinner from "@/components/Spinner";
+import ProductForm from "@/components/Layout/ProductForm";
+import Spinner from "@/components/Basic/Spinner";
 
 export default function EditProductPage() {
   const [productInfo, setProductInfo] = useState(null);
@@ -22,7 +22,7 @@ export default function EditProductPage() {
   }, [id]);
   return (
     <Layout>
-      <h1>Editeaza produsul</h1>
+      <h3 className="text_light">Editeaza produsul</h3>
       {isLoading && (
         <Spinner />
       )}
