@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Layout from '@/components/Layout/Layout'
 import Link from 'next/link'
 
-function productsList() {
+export default function ProductsList() {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
@@ -32,4 +32,3 @@ function productsList() {
     )
 }
 
-export default productsList

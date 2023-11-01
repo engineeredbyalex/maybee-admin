@@ -5,7 +5,7 @@ import Layout from '@/components/Layout/Layout'
 import Link from 'next/link'
 
 
-function productsSettings() {
+export default function ProductsSettings() {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
@@ -35,4 +35,3 @@ function productsSettings() {
     )
 }
 
-export default productsSettings
