@@ -21,7 +21,7 @@ export default function ProductsList() {
                     {products.map(product => (
                         <Link href={`/products/[id]`} as={`/products/${product._id}`}>
                             <div className='bg-[#ececec] py-10 flex items-center justify-center flex-col text-center rounded-xl' key={product._id}>
-                                <img className='w-[150px] h-[150px] rounded-xl' src={product.images[0]}></img>
+                                <img key={images._id} className='w-[150px] h-[150px] rounded-xl' src={product.images[0]}></img>
                                 <p className='mt-10'>{product.title}</p>
                             </div>
                         </Link>
