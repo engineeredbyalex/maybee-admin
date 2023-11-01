@@ -2,7 +2,7 @@ import Layout from "@/components/Layout/Layout";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Spinner from "@/components/Basic/Spinner";
-import {withSwal} from "react-sweetalert2";
+
 
 function SettingsPage({swal}) {
   const [products, setProducts] = useState([]);
@@ -40,10 +40,6 @@ function SettingsPage({swal}) {
       value: shippingFee,
     });
     setIsLoading(false);
-    await swal.fire({
-      title: 'Settings saved!',
-      icon: 'success',
-    });
   }
 
   return (
@@ -73,7 +69,3 @@ function SettingsPage({swal}) {
     </Layout>
   );
 }
-
-export default withSwal(({swal}) => (
-  <SettingsPage swal={swal} />
-));

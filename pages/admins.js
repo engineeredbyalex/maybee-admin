@@ -1,7 +1,6 @@
 import Layout from "@/components/Layout/Layout";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { withSwal } from "react-sweetalert2";
 import Spinner from "@/components/Basic/Spinner";
 import { prettyDate } from "@/lib/date";
 
@@ -39,10 +38,6 @@ function AdminsPage({ swal }) {
     }).then(async result => {
       if (result.isConfirmed) {
         axios.delete('/api/admins?_id=' + _id).then(() => {
-          swal.fire({
-            title: 'Admin deleted!',
-            icon: 'success',
-          });
           loadAdmins();
         });
       }
@@ -114,7 +109,3 @@ function AdminsPage({ swal }) {
     </Layout>
   );
 }
-
-export default withSwal(({ swal }) => (
-  <AdminsPage swal={swal} />
-));

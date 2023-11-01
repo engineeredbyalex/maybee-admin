@@ -1,7 +1,6 @@
 import Layout from "@/components/Layout/Layout";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import { withSwal } from 'react-sweetalert2';
 import Spinner from "@/components/Basic/Spinner";
 
 function Categories({swal}) {
@@ -215,6 +214,3 @@ function Categories({swal}) {
   );
 }
 
-export default withSwal(({swal}, ref) => (
-  <Categories swal={swal} />
-));
